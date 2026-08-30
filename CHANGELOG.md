@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.1.0
+
+- Búsqueda de YouTube por texto vía [`yt-search`](https://github.com/talmobi/yt-search) (sin API key),
+  expuesta como `ytdl.search()` y `ytdl.searchOne()`.
+- `ytdl.downloadFromQuery(query, options)`: combina búsqueda + `getInfo` + descarga en un solo stream,
+  con el mismo comportamiento que `ytdl(url)` pero a partir de texto en vez de una URL. Emite el evento
+  extra `searchResult` con el video encontrado antes de empezar a descargar.
+- Nueva clase de error `NoSearchResultsError` para cuando la búsqueda no encuentra nada.
+
 ## 1.0.0
 
 - Fork inicial a partir de `@distube/ytdl-core` v4.16.12.
