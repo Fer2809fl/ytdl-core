@@ -1,6 +1,6 @@
 {
   "name": "@fer2809fl/ytdl-core",
-  "description": "Fork personal de @distube/ytdl-core (a su vez fork de ytdl-core). Descargador de video de YouTube en JavaScript puro, con soporte dual CJS/ESM y jerarquía de errores propia.",
+  "description": "Fork personal de @distube/ytdl-core con backend youtubei.js. Descargador de video de YouTube en JavaScript puro.",
   "keywords": [
     "youtube",
     "video",
@@ -8,7 +8,7 @@
     "ytdl",
     "fer2809fl"
   ],
-  "version": "1.1.0",
+  "version": "2.0.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Fer2809fl/ytdl-core.git"
@@ -56,6 +56,7 @@
     "sax": "^1.4.1",
     "tough-cookie": "^5.1.2",
     "undici": "^7.8.0",
+    "youtubei.js": "^13.0.0",
     "yt-search": "^2.13.1"
   },
   "devDependencies": {
