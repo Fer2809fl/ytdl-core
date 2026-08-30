@@ -1,0 +1,69 @@
+{
+  "name": "@fer2809fl/ytdl-core",
+  "description": "Fork personal de @distube/ytdl-core (a su vez fork de ytdl-core). Descargador de video de YouTube en JavaScript puro, con soporte dual CJS/ESM y jerarquía de errores propia.",
+  "keywords": [
+    "youtube",
+    "video",
+    "download",
+    "ytdl",
+    "fer2809fl"
+  ],
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Fer2809fl/ytdl-core.git"
+  },
+  "homepage": "https://github.com/Fer2809fl/ytdl-core",
+  "bugs": {
+    "url": "https://github.com/Fer2809fl/ytdl-core/issues"
+  },
+  "author": "Fer2809fl (https://github.com/Fer2809fl)",
+  "contributors": [
+    "Skick (https://github.com/skick1234)",
+    "fent <fentbox@gmail.com> (https://github.com/fent)",
+    "Tobias Kutscha (https://github.com/TimeForANinja)",
+    "Andrew Kelley (https://github.com/andrewrk)",
+    "Mauricio Allende (https://github.com/mallendeo)",
+    "Rodrigo Altamirano (https://github.com/raltamirano)",
+    "Jim Buck (https://github.com/JimmyBoh)",
+    "Pawel Rucinski (https://github.com/Roki100)",
+    "Alexander Paolini (https://github.com/Million900o)"
+  ],
+  "main": "./lib/index.js",
+  "types": "./typings/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./typings/index.d.ts",
+      "import": "./esm/index.mjs",
+      "require": "./lib/index.js",
+      "default": "./lib/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "esm",
+    "typings"
+  ],
+  "scripts": {
+    "prettier": "prettier --write \"**/*.{js,json,yml,md,ts}\""
+  },
+  "dependencies": {
+    "http-cookie-agent": "^7.0.1",
+    "https-proxy-agent": "^7.0.6",
+    "m3u8stream": "^0.8.6",
+    "miniget": "^4.2.3",
+    "sax": "^1.4.1",
+    "tough-cookie": "^5.1.2",
+    "undici": "^7.8.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.2",
+    "prettier": "^3.5.3",
+    "typescript": "^5.8.3"
+  },
+  "engines": {
+    "node": ">=20.18.1"
+  },
+  "license": "MIT"
+}
