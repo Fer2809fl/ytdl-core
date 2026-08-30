@@ -37,6 +37,34 @@ import fs from "fs";
 ytdl("https://www.youtube.com/watch?v=VIDEO_ID").pipe(fs.createWriteStream("video.mp4"));
 ```
 
+## Búsqueda + descarga en un solo paso
+
+Este fork suma búsqueda por texto (vía [`yt-search`](https://github.com/talmobi/yt-search), sin API key)
+combinada con la descarga, para no tener que encadenar dos librerías vos mismo:
+
+```js
+const ytdl = require("@fer2809fl/ytdl-core");
+const fs = require("fs");
+
+// Solo buscar, devuelve la lista de resultados
+const videos = await ytdl.search("rick astley never gonna give you up");
+
+// Buscar y quedarte con el primer resultado
+const video = await ytdl.searchOne("rick astley never gonna give you up");
+console.log(video.title, video.url);
+
+// Buscar por texto Y descargar el primer resultado, todo junto
+ytdl
+  .downloadFromQuery("rick astley never gonna give you up")
+  .on("searchResult", video => console.log("Descargando:", video.title))
+  .pipe(fs.createWriteStream("video.mp4"));
+```
+
+`ytdl.downloadFromQuery()` devuelve un stream igual que `ytdl(url)`, con los mismos eventos
+(`info`, `progress`, `error`, etc.) más el evento extra `searchResult`, que se emite apenas
+se encuentra el video antes de arrancar la descarga. Si la búsqueda no encuentra nada, el stream
+emite un error `ytdl.errors.NoSearchResultsError`.
+
 ## Manejo de errores
 
 Todas las fallas conocidas heredan de `ytdl.errors.YtdlError`, así que se pueden distinguir por tipo:
@@ -59,20 +87,24 @@ try {
     // fallo de red/HTTP, err.statusCode tiene el código
   } else if (err instanceof ytdl.errors.ParsingError) {
     // YouTube cambió su estructura de respuesta
+  } else if (err instanceof ytdl.errors.NoSearchResultsError) {
+    // la búsqueda por texto no encontró videos
   }
 }
 ```
 
 Clases disponibles: `YtdlError`, `UnrecoverableError`, `UnavailableError`, `LiveStreamOfflineError`,
-`LoginRequiredError`, `NoFormatsError`, `InvalidURLError`, `ParsingError`, `StatusCodeError`.
+`LoginRequiredError`, `NoFormatsError`, `NoSearchResultsError`, `InvalidURLError`, `ParsingError`,
+`StatusCodeError`.
 
 ## API
 
 La API es la misma que `@distube/ytdl-core` (`ytdl()`, `ytdl.getInfo()`, `ytdl.getBasicInfo()`,
 `ytdl.chooseFormat()`, `ytdl.filterFormats()`, `ytdl.validateURL()`, `ytdl.validateID()`,
 `ytdl.getURLVideoID()`, `ytdl.getVideoID()`, `ytdl.downloadFromInfo()`, `ytdl.createAgent()`,
-`ytdl.createProxyAgent()`, `ytdl.cache`), así que cualquier código escrito para `@distube/ytdl-core`
-funciona igual acá, solo cambiando el nombre del paquete en el `require`/`import`.
+`ytdl.createProxyAgent()`, `ytdl.cache`), más lo agregado en este fork (`ytdl.errors`, `ytdl.search()`,
+`ytdl.searchOne()`, `ytdl.downloadFromQuery()`), así que cualquier código escrito para
+`@distube/ytdl-core` funciona igual acá, solo cambiando el nombre del paquete en el `require`/`import`.
 
 Documentación completa de opciones (agentes, proxies, cookies, IP rotation, cache, filtros de
 formato, etc.): ver el [README de DisTube](https://github.com/distubejs/ytdl-core#readme), que sigue
